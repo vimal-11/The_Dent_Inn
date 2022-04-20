@@ -1,0 +1,9 @@
+*.pyc
+*.sqlite
+*.sqlite3
+*.log
+*.rar
+*/__pycache__
+The_Dent_Inn/info.py
+static/home/scss
+static/home/lib
