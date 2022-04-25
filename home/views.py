@@ -73,8 +73,15 @@ def appointment(request):
                 time_slot = slot_time
         )
         appnt.save()
-        
+
         return render(request, 'appointment.html', {'patient_name': patient_name})
 
     else: 
         return render(request, 'appointment.html', {})
+
+def testimonial(request):
+    if request.method == 'POST':
+        email = request.POST['email']
+        return render(request, 'testimonial.html', {'email': email})
+    else:
+        return render(request, 'testimonial.html', {})
