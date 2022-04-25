@@ -3,6 +3,10 @@ from django.http import HttpResponse
 from django.shortcuts import render
 from django.core.mail import send_mail
 
+from home.models import Appointments
+from datetime import datetime
+from dateutil import parser
+
 # Create your views here.
 
 def home(request):
@@ -45,17 +49,31 @@ def appointment(request):
         patient_name = request.POST['patient-name']
         patient_email = request.POST['patient-email']
         date = request.POST['slot-date']
-        slot_time = request.POST['slot-time']
+        date_format= datetime.strptime(date, "%m/%d/%Y").strftime('%Y-%m-%d')
+        time = request.POST['slot-time']
+        slot_time = str(parser.parse(time)).split(' ')[1]
 
-        # send mail
+        context = {
+            'treatment': treatment,
+            'contact_no': contact_no,
+            'patient_name': patient_name,
+            'patient_email': patient_email,
+            'date': date_format,
+            'slot_time': slot_time
+        }
 
-        # send_mail(
-        #     message_sub,
-        #     message,
-        #     message_email,
-        #     [settings.EMAIL_HOST_USER],
-        # )
+        #saving db
 
+        appnt = Appointments(
+                patient_name = patient_name,
+                email = patient_email,
+                contact_no = contact_no,
+                treatment = treatment,
+                date = date_format,
+                time_slot = slot_time
+        )
+        appnt.save()
+        
         return render(request, 'appointment.html', {'patient_name': patient_name})
 
     else: 

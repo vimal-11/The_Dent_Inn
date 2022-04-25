@@ -5,7 +5,7 @@ from phonenumber_field.modelfields import PhoneNumberField
 
 class Appointments(models.Model):
     patient_name = models.CharField(max_length=100)
-    email = models.EmailField(verbose_name="email", max_length=60, unique=True)
+    email = models.EmailField(verbose_name="email", max_length=60)
     contact_no = PhoneNumberField(null=False, blank=False, unique=True)
     treatment = models.CharField(max_length=100) #must be changes to options
     date = models.DateField(null=True)
