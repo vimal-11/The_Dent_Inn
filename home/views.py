@@ -4,7 +4,7 @@ from django.shortcuts import redirect, render
 from django.core.mail import send_mail
 from django.urls import reverse
 
-from home.models import Appointments, Testimonial
+from home.models import Appointments, Testimonial, Contact
 from datetime import datetime
 from dateutil import parser
 
@@ -19,6 +19,14 @@ def contact(request):
         message_email = request.POST['message-email']
         message_sub = request.POST['message-sub']
         message = request.POST['message']
+
+        con_db = Contact(
+            name = message_name,
+            email = message_email,
+            subject = message_sub,
+            message = message
+        )
+        con_db.save()
 
         # send mail
 

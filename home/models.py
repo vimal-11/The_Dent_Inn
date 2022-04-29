@@ -29,3 +29,14 @@ class Testimonial(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class Contact(models.Model):
+    name = models.CharField(max_length=100)
+    email = models.EmailField(verbose_name="email", max_length=60)
+    subject = models.CharField(max_length=500)
+    message = models.TextField()
+    is_replied = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.name
