@@ -25,23 +25,23 @@
                             <h5 class="position-relative d-inline-block text-primary text-uppercase">Testimonial</h5>
                             <h1 class="display-5 mb-0">The World's Best Dental Clinic That You Can Trust</h1>
                         </div>
-                        <form action="{% url 'home:contact' %}" method="post">
+                        <form action="{% url 'home:create_testimonial' %}" method="post">
                             {% csrf_token %}
                             <div class="row g-3">
                                 <div class="col-12">
-                                    <input type="text" name="message-name" class="form-control border-0 bg-light px-4" placeholder="Your Name" style="height: 55px;">
+                                    <input type="text" name="test-name" class="form-control border-0 bg-light px-4" placeholder="Your Name" style="height: 55px;">
                                 </div>
                                 <div class="col-12">
-                                    <input type="email" name="message-email" class="form-control border-0 bg-light px-4" placeholder="Your Email" style="height: 55px;">
+                                    <input type="email" name="test-email" class="form-control border-0 bg-light px-4" placeholder="Your Email" value='{{ email }}' style="height: 55px;">
                                 </div>
                                 <div class="col-12">
-                                    <input type="text" name="message-sub" class="form-control border-0 bg-light px-4" placeholder="Subject" style="height: 55px;">
+                                    <input type="text" name="test-con" class="form-control border-0 bg-light px-4" placeholder="Contact Number" style="height: 55px;">
                                 </div>
                                 <div class="col-12">
-                                    <textarea name="message" class="form-control border-0 bg-light px-4 py-3" rows="5" placeholder="Message"></textarea>
+                                    <textarea name="test" class="form-control border-0 bg-light px-4 py-3" rows="5" placeholder="Message"></textarea>
                                 </div>
                                 <div class="col-12">
-                                    <button class="btn btn-primary w-100 py-3" type="submit">Send Message</button>
+                                    <button class="btn btn-primary w-100 py-3" type="submit">Post Testimonial</button>
                                 </div>
                             </div>
                         </form>

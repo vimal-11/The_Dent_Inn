@@ -136,7 +136,7 @@
                 <form action="{% url 'home:testimonial' %}" method="POST" class="mx-auto" style="max-width: 600px;">
                     {% csrf_token %}
                     <div class="input-group">
-                        <input type="text" name="email" class="form-control border-white p-3" placeholder="Your Email">
+                        <input type="text" name="email" class="form-control border-white p-3" placeholder="Your Email" required>
                         <button class="btn btn-dark px-4" type="submit">Give Testimonial</button>
                     </div>
                 </form>
@@ -157,7 +157,7 @@
                         <a class="text-light mb-2" href="{% url 'home:about' %}"><i class="bi bi-arrow-right text-primary me-2"></i>About Us</a>
                         <a class="text-light mb-2" href="{% url 'home:service' %}"><i class="bi bi-arrow-right text-primary me-2"></i>Our Services</a>
                         <a class="text-light mb-2" href="{% url 'home:appointment' %}"><i class="bi bi-arrow-right text-primary me-2"></i>Appointment</a>
-                        <a class="text-light" href="{% url 'home:contact' %}"><i class="bi bi-arrow-right text-primary me-2"></i>Contact Us</a>
+                        <a class="text-light mb-2" href="{% url 'home:contact' %}"><i class="bi bi-arrow-right text-primary me-2"></i>Contact Us</a>
                         <a class="text-light" href="{% url 'home:testimonial' %}"><i class="bi bi-arrow-right text-primary me-2"></i>Testimonial</a>
                     </div>
                 </div>

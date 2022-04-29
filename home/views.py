@@ -1,9 +1,10 @@
 from django.conf import settings
 from django.http import HttpResponse
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from django.core.mail import send_mail
+from django.urls import reverse
 
-from home.models import Appointments
+from home.models import Appointments, Testimonial
 from datetime import datetime
 from dateutil import parser
 
@@ -81,7 +82,31 @@ def appointment(request):
 
 def testimonial(request):
     if request.method == 'POST':
-        email = request.POST['email']
-        return render(request, 'testimonial.html', {'email': email})
+        email = request.POST['email']       
+        if len(email) > 2:
+            print('email: ' + email + str(len(email)))
+            #redirect(reverse('home:create_testimonial', kwargs={ 'email': email }))
+            return render(request, 'testimonial.html', { 'email': email })
+        else:
+            return render(request, 'testimonial.html', {})
     else:
         return render(request, 'testimonial.html', {})
+
+def create_testimonial(request):
+    if request.method == 'POST':
+        name = request.POST['test-name']
+        email = request.POST['test-email']
+        contact_no = request.POST['test-con']
+        message = request.POST['test']
+
+        test_db = Testimonial(
+            name = name,
+            email = email,
+            contact_no = contact_no,
+            message =  message
+        )
+        test_db.save()
+        return redirect('home:testimonial')
+        
+    else:
+        return HttpResponse("Something went wrong!")

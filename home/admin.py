@@ -1,5 +1,5 @@
 from django.contrib import admin
-from home.models import Appointments
+from home.models import Appointments, Testimonial
 
 # Register your models here.
 
@@ -12,3 +12,13 @@ class AppointmentsAdmin(admin.ModelAdmin):
         model = Appointments
 
 admin.site.register(Appointments, AppointmentsAdmin)
+
+class TestimonialAdmin(admin.ModelAdmin):
+    list_filter = ['name']
+    list_display = ['name', 'email', 'contact_no',]
+    search_fields = ['name', 'email', 'contact_no']
+
+    class Meta:
+        model = Testimonial
+
+admin.site.register(Testimonial, TestimonialAdmin)
