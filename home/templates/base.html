@@ -99,6 +99,7 @@
                 </div>
                 -->
                 <a href="{% url 'home:contact' %}" class="nav-item nav-link">Contact</a>
+                <a href="{% url 'home:testimonial' %}" class="nav-item nav-link">Testimonial</a>
             </div>
             <button type="button" class="btn text-dark" data-bs-toggle="modal" data-bs-target="#searchModal"><i class="fa fa-search"></i></button>
             <a href="{% url 'home:appointment' %}" class="btn btn-primary py-2 px-4 ms-3">Appointment</a>
@@ -132,10 +133,11 @@
     <div class="container-fluid position-relative pt-5 wow fadeInUp" data-wow-delay="0.1s" style="z-index: 1;">
         <div class="container">
             <div class="bg-primary p-5">
-                <form class="mx-auto" style="max-width: 600px;">
+                <form action="{% url 'home:testimonial' %}" method="POST" class="mx-auto" style="max-width: 600px;">
+                    {% csrf_token %}
                     <div class="input-group">
-                        <input type="text" class="form-control border-white p-3" placeholder="Your Email">
-                        <button class="btn btn-dark px-4">Sign Up</button>
+                        <input type="text" name="email" class="form-control border-white p-3" placeholder="Your Email" required>
+                        <button class="btn btn-dark px-4" type="submit">Give Testimonial</button>
                     </div>
                 </form>
             </div>
@@ -155,7 +157,8 @@
                         <a class="text-light mb-2" href="{% url 'home:about' %}"><i class="bi bi-arrow-right text-primary me-2"></i>About Us</a>
                         <a class="text-light mb-2" href="{% url 'home:service' %}"><i class="bi bi-arrow-right text-primary me-2"></i>Our Services</a>
                         <a class="text-light mb-2" href="{% url 'home:appointment' %}"><i class="bi bi-arrow-right text-primary me-2"></i>Appointment</a>
-                        <a class="text-light" href="{% url 'home:contact' %}"><i class="bi bi-arrow-right text-primary me-2"></i>Contact Us</a>
+                        <a class="text-light mb-2" href="{% url 'home:contact' %}"><i class="bi bi-arrow-right text-primary me-2"></i>Contact Us</a>
+                        <a class="text-light" href="{% url 'home:testimonial' %}"><i class="bi bi-arrow-right text-primary me-2"></i>Testimonial</a>
                     </div>
                 </div>
                 <!--

@@ -1,7 +1,12 @@
 from django.conf import settings
 from django.http import HttpResponse
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from django.core.mail import send_mail
+from django.urls import reverse
+
+from home.models import Appointments, Testimonial
+from datetime import datetime
+from dateutil import parser
 
 # Create your views here.
 
@@ -45,18 +50,63 @@ def appointment(request):
         patient_name = request.POST['patient-name']
         patient_email = request.POST['patient-email']
         date = request.POST['slot-date']
-        slot_time = request.POST['slot-time']
+        date_format= datetime.strptime(date, "%m/%d/%Y").strftime('%Y-%m-%d')
+        time = request.POST['slot-time']
+        slot_time = str(parser.parse(time)).split(' ')[1]
 
-        # send mail
+        context = {
+            'treatment': treatment,
+            'contact_no': contact_no,
+            'patient_name': patient_name,
+            'patient_email': patient_email,
+            'date': date_format,
+            'slot_time': slot_time
+        }
 
-        # send_mail(
-        #     message_sub,
-        #     message,
-        #     message_email,
-        #     [settings.EMAIL_HOST_USER],
-        # )
+        #saving db
+
+        appnt = Appointments(
+                patient_name = patient_name,
+                email = patient_email,
+                contact_no = contact_no,
+                treatment = treatment,
+                date = date_format,
+                time_slot = slot_time
+        )
+        appnt.save()
 
         return render(request, 'appointment.html', {'patient_name': patient_name})
 
     else: 
         return render(request, 'appointment.html', {})
+
+def testimonial(request):
+    if request.method == 'POST':
+        email = request.POST['email']       
+        if len(email) > 2:
+            print('email: ' + email + str(len(email)))
+            #redirect(reverse('home:create_testimonial', kwargs={ 'email': email }))
+            return render(request, 'testimonial.html', { 'email': email })
+        else:
+            return render(request, 'testimonial.html', {})
+    else:
+        return render(request, 'testimonial.html', {})
+
+def create_testimonial(request):
+    if request.method == 'POST':
+        name = request.POST['test-name']
+        email = request.POST['test-email']
+        contact_no = request.POST['test-con']
+        message = request.POST['test']
+
+        test_db = Testimonial(
+            name = name,
+            email = email,
+            contact_no = contact_no,
+            message =  message
+        )
+        test_db.save()
+        return redirect('home:testimonial')
+        
+    else:
+        return HttpResponse("Something went wrong!")
