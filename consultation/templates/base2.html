@@ -131,22 +131,13 @@
       
     {% endblock content %}
 
-    <!-- Newsletter Start -->
     <div class="container-fluid position-relative pt-5 wow fadeInUp" data-wow-delay="0.1s" style="z-index: 1;">
         <div class="container">
             <div class="bg-primary p-5">
-                <form action="{% url 'home:testimonial' %}" method="POST" class="mx-auto" style="max-width: 600px;">
-                    {% csrf_token %}
-                    <div class="input-group">
-                        <input type="text" name="email" class="form-control border-white p-3" placeholder="Your Email" required>
-                        <button class="btn btn-dark px-4" type="submit">Give Testimonial</button>
-                    </div>
-                </form>
+               
             </div>
         </div>
     </div>
-    <!-- Newsletter End -->
-    
 
     <!-- Footer Start -->
     <div class="container-fluid bg-dark text-light py-5 wow fadeInUp" data-wow-delay="0.3s" style="margin-top: -75px;">
