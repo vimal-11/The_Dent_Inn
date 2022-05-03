@@ -1,9 +1,12 @@
+from django.conf import settings
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
+from django.contrib.sites.shortcuts import get_current_site
 
-from consultation.models import Consultation
+from consultation.models import Consultation, Payment
 from .mixins import  MessageHandler
 
+import razorpay
 import random
 
 # Create your views here.
@@ -15,20 +18,19 @@ def consult(request):
         email = request.POST['patient-email']
         symptoms = request.POST['symptoms']
 
-        #db object creation
-        consult_obj = Consultation.objects.create(name = name,
-                                                  phone_number = ph_no,
-                                                  email = email,
-                                                  symptoms = symptoms    
-                                                )
+
+        consult_obj, created = Consultation.objects.get_or_create(name = name,
+                                                                phone_number = ph_no,
+                                                                email = email,    
+                                                            )
+        consult_obj.symptoms = symptoms
         consult_obj.otp = random.randint(1000, 9999)
         consult_obj.save()
 
-        con_obj = Consultation.objects.get(name=name, phone_number=ph_no)
-        print(con_obj.phone_number, con_obj.otp, con_obj.name, con_obj.email)
+        print(consult_obj.phone_number, consult_obj.otp, consult_obj.name, consult_obj.email)
 
         #message_handler = MessageHandler(con_obj.phone_number, con_obj.otp)
-        return redirect('consultation:otp', uid=con_obj.uid)
+        return redirect('consultation:otp', uid=consult_obj.uid)
 
     else:
         return render(request, 'consult.html')
@@ -47,3 +49,43 @@ def otp(request, uid):
         else:
             return HttpResponse("Fail")
     return render(request, 'otp.html', context)
+
+def payment(request, uid):
+    con_obj = Consultation.objects.get(uid=uid)
+    if request.method == 'POST':
+        amount = con_obj.fee
+        pay_obj, created = Payment.objects.get_or_create(user=con_obj, 
+                                                         total_amount = amount
+                                                        )
+        pay_obj.save()
+
+        # razorpay client
+
+        razorpay_client = razorpay.Client(auth=(settings.RAZORPAY_KEY_ID, settings.RAZORPAY_KEY_SECRET))
+        razorpay_order = razorpay_client.order.create({
+                                                "amount": int(amount) * 100, 
+                                                "currency": "INR", 
+                                                "receipt": pay_obj.payment_id,
+                                                "payment_capture": "1"
+                                                })
+        print(razorpay_order['id'])
+        pay_obj.razorpay_order_id = razorpay_order['id']
+        pay_obj.save()
+        callback_url = 'http://'+ str(get_current_site(request))+"/handlerequest/"
+        print(callback_url)
+
+        razorpay_context = {
+                            'payment': pay_obj, 
+                            'razorpay_order_id': razorpay_order['id'], 
+                            'payment_id': pay_obj.payment_id, 
+                            'final_price': pay_obj.total_amount, 
+                            'razorpay_merchant_id': settings.RAZORPAY_KEY_ID, 
+                            'callback_url': callback_url
+                           }
+        return render(request, '/payment.html', razorpay_context)
+    
+    else:
+        return HttpResponse("404 Not Found") 
+
+def handlerequest(request):
+    pass
