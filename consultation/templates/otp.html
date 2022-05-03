@@ -1,0 +1,69 @@
+{% extends "base2.html" %}
+{% load static %}
+
+{% block content %}
+
+    <style>
+        .card {
+            margin-top: 30px;
+            width: 350px;
+            padding: 10px;
+            border-radius: 20px;
+            border: none;
+            height: 350px;
+            position: relative;
+        }
+        
+        
+        .mobile-text {
+            color: #989696b8;
+            font-size: 15px;
+        }
+        
+        .form-control {
+            margin-right: 12px;
+        }
+        
+        .form-control:focus {
+            color: #495057;
+            border-color: #ff8880;
+            outline: 0;
+            box-shadow: none;
+        }
+        
+        .cursor {
+            cursor: pointer;
+        }
+    </style>
+
+    <div class="d-flex justify-content-center align-items-center container">
+        <div class="card py-5 px-3">
+            <h3 class="m-1">OTP Verification</h3>
+            <span class="mobile-text">Enter the code we just sent to your mobile phone <b class="text-danger">{{object.phone_number}}</b></span>
+            <form action="{% url 'consultation:otp' uid=object.uid %}" method="post">
+                {% csrf_token %}
+                <div class="d-flex flex-row mt-3">
+                    <input type="text" name='d1' id='1st' maxlength="1" onkeyup="clickEvent(this,'2nd')" class="form-control" autofocus="">
+                    <input type="text" name='d2' id='2nd' maxlength="1" onkeyup="clickEvent(this,'3rd')" class="form-control">
+                    <input type="text" name='d3' id='3rd' maxlength="1" onkeyup="clickEvent(this,'4th')" class="form-control">
+                    <input type="text" name='d4' id='4th' maxlength="1" class="form-control">
+                </div>
+                <div class="col-7 m-auto mt-4">
+                    <button class="btn btn-dark w-100 py-2" type="submit">Verify</button>
+                </div>
+            </form>
+            <div class="text-center mt-4">
+                <span class="d-block mobile-text">Don't receive the code?</span><span class="font-weight-bold text-danger cursor">Resend</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function clickEvent(first,last){
+            if(first.value.length){
+                document.getElementById(last).focus();
+            }
+        }
+    </script>
+
+{% endblock content %}

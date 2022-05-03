@@ -29,16 +29,21 @@ def consult(request):
 
         #message_handler = MessageHandler(con_obj.phone_number, con_obj.otp)
         return redirect('consultation:otp', uid=con_obj.uid)
-        
+
     else:
         return render(request, 'consult.html')
 
 def otp(request, uid):
+    user = Consultation.objects.get(uid=uid)
+    context = {'object': user}
     if request.method == 'POST':
-        otp = request.POST['otp']
-        user = Consultation.objects.get(uid=uid)
+        di1 = request.POST['d1']
+        di2 = request.POST['d2']
+        di3 = request.POST['d3']
+        di4 = request.POST['d4']
+        otp = di1 + di2 + di3 + di4
         if otp == user.otp:
             return HttpResponse("success")
         else:
             return HttpResponse("Fail")
-    return HttpResponse("hello")
+    return render(request, 'otp.html', context)
