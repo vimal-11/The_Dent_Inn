@@ -3,39 +3,6 @@
 
 {% block content %}
 
-    <style>
-        .card {
-            margin-top: 30px;
-            width: 350px;
-            padding: 10px;
-            border-radius: 20px;
-            border: none;
-            height: 350px;
-            position: relative;
-        }
-        
-        
-        .mobile-text {
-            color: #989696b8;
-            font-size: 15px;
-        }
-        
-        .form-control {
-            margin-right: 12px;
-        }
-        
-        .form-control:focus {
-            color: #495057;
-            border-color: #ff8880;
-            outline: 0;
-            box-shadow: none;
-        }
-        
-        .cursor {
-            cursor: pointer;
-        }
-    </style>
-
     <div class="d-flex justify-content-center align-items-center container">
         <div class="card py-5 px-3">
             <h3 class="m-1">OTP Verification</h3>
@@ -48,13 +15,41 @@
                     <input type="text" name='d3' id='3rd' maxlength="1" onkeyup="clickEvent(this,'4th')" class="form-control">
                     <input type="text" name='d4' id='4th' maxlength="1" class="form-control">
                 </div>
-                <div class="col-7 m-auto mt-4">
-                    <button class="btn btn-dark w-100 py-2" type="submit">Verify</button>
-                </div>
-            </form>
-            <div class="text-center mt-4">
-                <span class="d-block mobile-text">Don't receive the code?</span><span class="font-weight-bold text-danger cursor">Resend</span>
-            </div>
+                
+            {% if status %}
+                {% if resend %}
+                    <div class="col-7 m-auto mt-4">
+                        <button class="btn btn-dark w-100 py-2" type="submit">Verify</button>
+                    </div>
+                </form>
+                    <div class="text-center mt-4">
+                        <span class="d-block mobile-text">New Code sent to {{object.phone_number}}, still Don't receive the code?</span><span class="font-weight-bold text-danger cursor"><a href="{% url 'consultation:resendotp' uid=object.uid %}">Resend</a></span>
+                    </div>
+                {% else %}
+                    <div class="col-7 m-auto mt-4">
+                        <button class="btn btn-dark w-100 py-2" type="submit">Verify</button>
+                    </div>
+                </form>
+                    <div class="text-center mt-4">
+                        <span class="d-block mobile-text">Don't receive the code?</span><span class="font-weight-bold text-danger cursor"><a href="{% url 'consultation:resendotp' uid=object.uid %}">Resend</a></span>
+                    </div>
+                {% endif %}
+            {% else %}
+                    {% if fail %}
+                        <div class="text-center mt-4">
+                            <span class="d-block mobile-text text-danger">Incorrect OTP, Please try again!</span><span class="font-weight-bold text-danger cursor"><a href="{% url 'consultation:resendotp' uid=object.uid %}">Resend OTP</a></span>
+                        </div>
+                    {% else %}
+                        <div class="col-7 m-auto mt-4">
+                            <button class="btn btn-dark w-100 py-2" type="submit">Verify</button>
+                        </div>
+                    </form>
+                        <div class="text-center mt-4">
+                            <span class="d-block mobile-text">New Code sent to {{object.phone_number}}, still Don't receive the code?</span><span class="font-weight-bold text-danger cursor"><a href="{% url 'consultation:resendotp' uid=object.uid %}">Resend</a></span>
+                        </div>
+                    {% endif %}
+            {% endif %}
+            
         </div>
     </div>
 

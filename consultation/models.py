@@ -1,8 +1,9 @@
 from django.db import models
 from phonenumber_field.modelfields import PhoneNumberField
+from django.utils import timezone
 import uuid
 
-from pytz import timezone
+
 import razorpay
 # Create your models here.
 
@@ -33,7 +34,7 @@ class Payment(models.Model):
                             (3, 'PENDING'),
                     )
     user = models.ForeignKey(Consultation, on_delete=models.RESTRICT)
-    total_amaount = models.FloatField()
+    total_amount = models.FloatField()
     Payment_status = models.IntegerField(choices=Payment_status_choices, default=3)
     payment_id = models.CharField(unique=True, blank=True, null=True, default=None, max_length=100)
     time_of_payment = models.DateTimeField(default=timezone.now)
@@ -48,4 +49,4 @@ class Payment(models.Model):
         return super().save(*args, **kwargs)
 
     def __str__(self):
-        return self.user.name + self.user.phone_number + str(self.id)
+        return self.user.name + str(self.user.phone_number) + str(self.id)
