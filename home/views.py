@@ -118,3 +118,19 @@ def create_testimonial(request):
         
     else:
         return HttpResponse("Something went wrong!")
+
+
+def my_appointments(request):
+    context = {'appointment': True}
+    if request.method == 'POST':
+        name = request.POST['user-name']
+        email = request.POST['user-email']
+        phone_number = request.POST['user-phone']
+
+        user = Appointments.objects.get(email = email, phone_number = phone_number)
+        if user is None:
+            return HttpResponse('No Appointments')
+        context['user'] = user
+        return render(request, 'my_booking_status.html', context)
+    else:
+        return render(request, 'my_booking.html', context)

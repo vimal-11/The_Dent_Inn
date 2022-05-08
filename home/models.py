@@ -15,6 +15,7 @@ class Appointments(models.Model):
     time_slot = models.TimeField(null=True)
     is_active = models.BooleanField(default=False)
     is_done = models.BooleanField(default=False)
+    date_time_fixed = models.DateTimeField(null=True, blank=True)
 
     def __str__(self):
         return self.patient_name

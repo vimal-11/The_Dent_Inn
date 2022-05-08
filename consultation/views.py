@@ -139,6 +139,9 @@ def handlerequest(request):
                     #razorpay_client.payment.capture(raz_payment_id, amount)
                     pay_db.Payment_status = 1
                     pay_db.save()
+                    con_obj = Consultation.objects.get(uid = pay_db.user.uid)
+                    con_obj.is_paid = True
+                    con_obj.save()
                     pay_status = True
                     print(params_dict)
                 except Exception as e: 
@@ -155,3 +158,19 @@ def handlerequest(request):
         except Exception as e:
             print(e)
             return HttpResponse("505 not found")
+
+
+def my_consult_booking(request):
+    context = {'consultation': True}
+    if request.method == 'POST':
+        name = request.POST['user-name']
+        email = request.POST['user-email']
+        phone_number = request.POST['user-phone']
+
+        user = Consultation.objects.get(email = email, phone_number = phone_number)
+        if user is None:
+            return HttpResponse('No Appointments')
+        context['user'] = user
+        return render(request, 'my_booking_status.html', context)
+    else:
+        return render(request, 'my_booking.html', context)

@@ -8,4 +8,5 @@ urlpatterns = [
     path('payment/<uid>', views.payment, name='payment'),
     path('handlerequest/', views.handlerequest, name = 'handlerequest'),
     path('resendotp/<uid>', views.resend_otp, name = 'resendotp'),
+    path('mybookings/', views.my_consult_booking, name = 'mybooking'),
 ]
