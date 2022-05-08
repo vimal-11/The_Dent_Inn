@@ -1,0 +1,32 @@
+{% extends "base2.html" %}
+{% load static %}
+
+{% block content %}
+
+<div class="container" style="text-align:center;">
+    <div class="container py-5">
+        <div class="row justify-content-center">
+    {% if status %}
+        <h1>Payment Success</h1>
+        <br>
+        <h3>Congratulations! You have successfully done the payment. You will receive an email shortly with all details once your slot timings are fixed.</h3>
+        <p class="mainmessage">
+            In order to view the status of your appointment, visit <a href="#">My Appointments</a>
+        </p>
+        <br>
+        <a class="btn btn-primary btn-lg signup-button w-50" href="#">Print Invoice</a>
+    {% else %}
+        <h1>Payment Failed</h1>
+        <h3>Sorry! Your payment has been failed. Please try again.</h3>
+        <br>
+        <p class="mainmessage">
+        In case your money has been deducted, money will be autorefunded in 7-10 days.
+        </p>
+        <br>
+        <p class="mainmessage">Thank You for choosing us. You can contact us for any queries or details.</p>
+    {% endif %}
+    </div>
+    </div>
+</div>
+
+{% endblock content %}

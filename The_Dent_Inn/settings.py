@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'home',
+    'consultation',
     'phonenumber_field',
 ]
 
@@ -137,3 +138,13 @@ EMAIL_HOST = EMAIL_HOST
 EMAIL_HOST_USER = EMAIL_HOST_USER
 EMAIL_HOST_PASSWORD = EMAIL_HOST_PASSWORD
 EMAIL_PORT = EMAIL_PORT 
+
+# Twilio
+
+ACCOUNT_SID = ''
+AUTH_TOKEN = ''
+
+# Razorpay Settings
+
+RAZORPAY_KEY_ID = KEY_ID
+RAZORPAY_KEY_SECRET = KEY_SECRET 
