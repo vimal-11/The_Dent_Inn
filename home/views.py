@@ -127,7 +127,7 @@ def my_appointments(request):
         email = request.POST['user-email']
         phone_number = request.POST['user-phone']
 
-        user = Appointments.objects.get(email = email, phone_number = phone_number)
+        user = Appointments.objects.filter(email = email, contact_no = phone_number)
         if user is None:
             return HttpResponse('No Appointments')
         context['user'] = user

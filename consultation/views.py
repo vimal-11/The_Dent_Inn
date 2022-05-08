@@ -167,7 +167,7 @@ def my_consult_booking(request):
         email = request.POST['user-email']
         phone_number = request.POST['user-phone']
 
-        user = Consultation.objects.get(email = email, phone_number = phone_number)
+        user = Consultation.objects.filter(email = email, phone_number = phone_number)
         if user is None:
             return HttpResponse('No Appointments')
         context['user'] = user
