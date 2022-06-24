@@ -1,5 +1,3 @@
-from distutils.log import error
-from multiprocessing import context
 from django.conf import settings
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
@@ -64,8 +62,8 @@ def resend_otp(request, uid):
     user = Consultation.objects.get(uid=uid)
     user.otp = random.randint(1000, 9999)
     user.save()
-    #message_handler = MessageHandler(user.phone_number, user.otp)
-    print(user.phone_number, user.otp, user.name, user.email)
+    # message_handler = MessageHandler(user.phone_number, user.otp)
+    # print(user.phone_number, user.otp, user.name, user.email)
     context = {'object': user, 'resend': True}
     return render(request, 'otp.html', context)
 
@@ -93,7 +91,7 @@ def payment(request, uid):
     pay_obj.razorpay_order_id = razorpay_order['id']
     pay_obj.save()
     callback_url = 'http://'+ str(get_current_site(request))+"/consultation/handlerequest/"
-    print(callback_url)
+    print("Callback: " + callback_url)
 
     razorpay_context = {
                         'payment': pay_obj, 
@@ -126,19 +124,25 @@ def handlerequest(request):
             try:
                 pay_db = Payment.objects.get(razorpay_order_id=raz_order_id)
             except:
-                return HttpResponse("404 Not Found")
+                pay_status = False
+                return render(request, 'paymentstatus.html',{
+                                                        # 'id':pay_db.payment_id, 
+                                                        'status': pay_status,
+                                                        'consultation': True})
             pay_db.razorpay_payment_id = raz_payment_id
             pay_db.razorpay_signature = raz_signature
             pay_db.save()
             result = razorpay_client.utility.verify_payment_signature(params_dict)
             print(result)
             if result:
-                amount = pay_db.total_amount * 100   #we have to pass in paisa
-                print(amount)
+                amount = pay_db.total_amount * 100   #we have to pass in paisa 
                 try:
                     #razorpay_client.payment.capture(raz_payment_id, amount)
                     pay_db.Payment_status = 1
                     pay_db.save()
+                    con_obj = Consultation.objects.get(uid = pay_db.user.uid)
+                    con_obj.is_paid = True
+                    con_obj.save()
                     pay_status = True
                     print(params_dict)
                 except Exception as e: 
@@ -150,8 +154,26 @@ def handlerequest(request):
                 pay_db.Payment_status = 2
                 pay_db.save()
                 pay_status = False
-                
-            return render(request, 'paymentstatus.html',{'id':pay_db.id, 'status': pay_status})
+            return render(request, 'paymentstatus.html',{'id':pay_db.payment_id, 
+                                                        'status': pay_status,
+                                                        'consultation': True})
         except Exception as e:
             print(e)
-            return HttpResponse("505 not found")
+            return HttpResponse("404 not found")
+
+
+def my_consult_booking(request):
+    context = {'consultation': True}
+    if request.method == 'POST':
+        name = request.POST['user-name']
+        email = request.POST['user-email']
+        phone_number = request.POST['user-phone']
+
+        users = Consultation.objects.filter(email = email, phone_number = phone_number)
+        if len(users) < 1:
+            #return HttpResponse('No Appointments')
+            return render(request, 'my_booking_status.html', {"Nolist": True})
+        context['users'] = users
+        return render(request, 'my_booking_status.html', context)
+    else:
+        return render(request, 'my_booking.html', context)

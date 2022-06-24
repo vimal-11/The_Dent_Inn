@@ -16,12 +16,11 @@ class Consultation(models.Model):
     uid                 = models.UUIDField(default=uuid.uuid4)
     meet_link           = models.URLField(null=True)
     registration_time   = models.DateTimeField(auto_now=True)
-    fee                 = models.FloatField(null=True, default=250)
+    consultation_time   = models.DateTimeField(null=True, blank=True)
+    fee                 = models.FloatField(default=250)
     is_paid             = models.BooleanField(default=False)
     is_fixed            = models.BooleanField(default=False)
     is_completed        = models.BooleanField(default=False)
-
-
 
     def __str__(self):
         return self.name

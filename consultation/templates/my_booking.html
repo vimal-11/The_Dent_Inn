@@ -1,0 +1,80 @@
+{% extends "base2.html" %}
+{% load static %}
+
+{% block content %}
+
+    <!-- Hero Start -->
+    <div class="container-fluid bg-primary py-5 hero-header mb-5">
+        <div class="row py-3">
+            <div class="col-12 text-center">
+                {% if consultation %}
+                    <h1 class="display-3 text-white animated zoomIn">My Consultations</h1>
+                {% endif %}
+                {% if appointment %}
+                    <h1 class="display-3 text-white animated zoomIn">My Appointments</h1>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <!-- Hero End -->
+
+    <div class="container-fluid py-5">
+        <div class="container">
+                <div class="row g-5">
+                    <div class="col-xl-4 col-lg-6 wow slideInUp" data-wow-delay="0.1s">
+                        
+                    </div>
+                    {% if consultation %}
+                        <div class="col-xl-4 col-lg-6 wow slideInUp" data-wow-delay="0.3s">
+                            <h3>View your consultation details</h3><br>
+                            <form action="{% url 'consultation:mybooking' %}" method="post">
+                                {% csrf_token %}
+                                <div class="row g-3">
+                                    <div class="col-12">
+                                        <input type="text" name="user-name" class="form-control border-0 bg-light px-4" placeholder="Your Name" style="height: 55px;">
+                                    </div>
+                                    <div class="col-12">
+                                        <input type="email" name="user-email" class="form-control border-0 bg-light px-4" placeholder="Your Email" style="height: 55px;">
+                                    </div>
+                                    <div class="col-12">
+                                        <input type="text" name="user-phone" class="form-control border-0 bg-light px-4" placeholder="Your Phone Number" style="height: 55px;">
+                                    </div>
+                                    <div class="col-12">
+                                        <button class="btn btn-primary w-100 py-3" type="submit">View Consultations</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    {% endif %}
+
+                    {% if appointment %}
+                        <div class="col-xl-4 col-lg-6 wow slideInUp" data-wow-delay="0.3s">
+                            <h3>View your appointment details</h3><br>
+                            <form action="{% url 'home:my_appointments' %}" method="post">
+                                {% csrf_token %}
+                                <div class="row g-3">
+                                    <div class="col-12">
+                                        <input type="text" name="user-name" class="form-control border-0 bg-light px-4" placeholder="Your Name" style="height: 55px;">
+                                    </div>
+                                    <div class="col-12">
+                                        <input type="email" name="user-email" class="form-control border-0 bg-light px-4" placeholder="Your Email" style="height: 55px;">
+                                    </div>
+                                    <div class="col-12">
+                                        <input type="text" name="user-phone" class="form-control border-0 bg-light px-4" placeholder="Your Phone Number" style="height: 55px;">
+                                    </div>
+                                    <div class="col-12">
+                                        <button class="btn btn-primary w-100 py-3" type="submit">View Appointment</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    {% endif %}
+                    <div class="col-xl-4 col-lg-12 wow slideInUp" data-wow-delay="0.6s">
+                    
+                    </div>
+                </div>
+        </div>
+    </div>
+<!-- Contact End -->
+
+{% endblock content %}

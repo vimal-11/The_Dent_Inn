@@ -1,0 +1,82 @@
+{% extends "base2.html" %}
+{% load static %}
+
+{% block content %}
+
+        <div class="container-fluid position-relative py-5">
+            <div class="container">
+                {% if consultation %}
+                    {% for user in users %}
+                    <div class="card mb-100" style="width: 100%;">
+                        <div class="card-header">
+                        Featured
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">Special title treatment</h5><br>
+                            <div class="card-text d-flex">
+                                <div class="w-50">
+                                    <p class="card-text">Name: {{user.name}} </p>
+                                    <p class="card-text">Email: {{user.email}} </p>
+                                    <p class="card-text">Contact: {{user.phone_number}}</p>
+                                    <p class="card-text">Applied on: {{user.registration_time}} </p> 
+                                </div>
+                                <div>
+                                    <p class="card-text">Consultation Fee: {{user.fee}}</p>
+                                    {% if user.fee %}
+                                        <p class="card-text">Paid Status: Paid</p>
+                                    {% else %}
+                                        <p class="card-text">Paid Status: Pending</p>
+                                    {% endif %}
+                                    {% if user.is_fixed %}
+                                        <p class="card-text">Confirmation Status: Confirmed</p>
+                                        <p class="card-text">Time of Consultation:  </p>
+                                        <p class="card-text">Meet Link: {{user.meet_link}}</p>
+                                    {% else %}
+                                        <p class="card-text">Confirmation Status: Pending</p>
+                                        <p class="card-text">Time of Consultation: will be Alloted soon </p>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                {% endif %}
+                {% if appointment %}
+                    {% for user in users %}
+                    <div class="card mb-100" style="width: 100%;">
+                        <div class="card-header">
+                        Featured
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">Special title treatment</h5><br>
+                            <div class="card-text d-flex">
+                                <div class="w-50">
+                                    <p class="card-text">Name: {{user.patient_name}} </p>
+                                    <p class="card-text">Email: {{user.email}} </p>
+                                    <p class="card-text">Contact: {{user.contact_no}}</p>
+                                </div>
+                                <div>
+                                    {% if user.is_active %}
+                                        <p class="card-text">Confirmation Status: Confirmed</p>
+                                        <p class="card-text">Date & Time of Appointment:  </p>
+                                    {% else %}
+                                        <p class="card-text">Confirmation Status: Pending</p>
+                                        <p class="card-text">Appointment mode: In Person</p>    
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                {% endif %}
+                {% if Nolist %}
+                    <h3>No Bookings or Appoinments made</h3><br>
+                    <h4>
+                        <a href="{% url 'consultation:consult' %}" class="btn btn-primary py-md-3 px-md-5 me-3 animated slideInLeft">Online Consultaion</a>
+                        <a href="{% url 'home:appointment' %}" class="btn btn-primary py-md-3 px-md-5 me-3 animated slideInLeft">Make Appointment</a>
+                    </h4>
+                {% endif %}
+            </div>
+        </div>
+{% endblock content %}
+
