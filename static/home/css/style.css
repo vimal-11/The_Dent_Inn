@@ -1,6 +1,7 @@
 /********** Template CSS **********/
 :root {
-    --primary: #06A3DA;
+    /*--primary: #06A3DA;*/
+    --primary: #008080;
     --secondary: #F57E57;
     --light: #EEF9FF;
     --dark: #091E3E;
@@ -200,7 +201,7 @@ h6,
 }
 
 .appointment-form {
-    background: rgba(6, 163, 218, .7);
+    background: rgba(6, 200, 200, 0.827);
 }
 
 .service-item img,
@@ -240,7 +241,7 @@ h6,
 }
 
 .offer-text {
-    background: rgba(6, 163, 218, .85);
+    background: rgba(6, 200, 200, 0.827);
 }
 
 .price-carousel .owl-nav {
@@ -285,7 +286,7 @@ h6,
 }
 
 .testimonial-carousel {
-    background: rgba(6, 163, 218, .85);
+    background: rgba(6, 200, 200, 0.827);
 }
 
 .testimonial-carousel .owl-nav {
