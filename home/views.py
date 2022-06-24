@@ -128,8 +128,9 @@ def my_appointments(request):
         phone_number = request.POST['user-phone']
 
         users = Appointments.objects.filter(email = email, contact_no = phone_number)
-        if len(users):
-            return HttpResponse('No Appointments')
+        if len(users) < 1:
+            #return HttpResponse('No Appointments')
+            return render(request, 'my_booking_status.html', {"Nolist": True})
         context['users'] = users
         return render(request, 'my_booking_status.html', context)
     else:
