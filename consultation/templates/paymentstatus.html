@@ -9,10 +9,18 @@
     {% if status %}
         <h1>Payment Success</h1>
         <br>
-        <h3>Congratulations! You have successfully done the payment. You will receive an email shortly with all details once your slot timings are fixed.</h3>
-        <p class="mainmessage">
-            In order to view the status of your appointment, visit <a href="{{url 'consultation:myappointment' }}">My Appointments</a>
-        </p>
+        <h3>Congratulations! You have successfully done the payment. You will receive an email shortly with all details once your slot timings are fixed.</h3><br>
+        <h4>Your Transaction Id is {{id}}</h4>
+        <br><br><br><br>
+        {% if consultation %}
+            <p class="mainmessage">
+                In order to view the status of your booking, visit <a href="{% url 'consultation:mybooking' %}">My Bookings</a>
+            </p> 
+        {% else %}
+            <p class="mainmessage">
+                In order to view the status of your appointment, visit <a href="{% url 'home:my_appointments' %}">My Appointments</a>
+            </p> 
+        {% endif %}
         <br>
         <a class="btn btn-primary btn-lg signup-button w-50" href="#">Print Invoice</a>
     {% else %}

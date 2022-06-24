@@ -127,10 +127,10 @@ def my_appointments(request):
         email = request.POST['user-email']
         phone_number = request.POST['user-phone']
 
-        user = Appointments.objects.filter(email = email, contact_no = phone_number)
-        if user is None:
+        users = Appointments.objects.filter(email = email, contact_no = phone_number)
+        if len(users):
             return HttpResponse('No Appointments')
-        context['user'] = user
+        context['users'] = users
         return render(request, 'my_booking_status.html', context)
     else:
         return render(request, 'my_booking.html', context)
