@@ -58,7 +58,8 @@
                                 <div>
                                     {% if user.is_active %}
                                         <p class="card-text">Confirmation Status: Confirmed</p>
-                                        <p class="card-text">Date & Time of Appointment:  </p>
+                                        <p class="card-text">Date & Time of Appointment: {{user.date_time_fixed}}</p>
+                                        <p class="card-text">Appointment mode: In Person</p> 
                                     {% else %}
                                         <p class="card-text">Confirmation Status: Pending</p>
                                         <p class="card-text">Appointment mode: In Person</p>    
