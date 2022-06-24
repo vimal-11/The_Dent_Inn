@@ -7,7 +7,7 @@ class MessageHandler:
     otp = None
 
     def __init__(self, phone_number, otp):
-        self.phone_number = phone_number
+        self.phone_number = str(phone_number)
         self.otp = otp
 
     def send_otp_on_mobile(self):
@@ -15,6 +15,6 @@ class MessageHandler:
 
         message = client.messages.create(
                                     body = f'Your OTP for The Dent Inn online consultaion is {self.otp}',
-                                    from_ = '+1234567890',
+                                    from_ = '+19895024765',
                                     to = self.phone_number  
                             )

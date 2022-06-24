@@ -27,10 +27,9 @@ def consult(request):
         consult_obj.symptoms = symptoms
         consult_obj.otp = random.randint(1000, 9999)
         consult_obj.save()
-
+        message_handler = MessageHandler(consult_obj.phone_number, consult_obj.otp)
+        message_handler.send_otp_on_mobile()
         print(consult_obj.phone_number, consult_obj.otp, consult_obj.name, consult_obj.email)
-
-        #message_handler = MessageHandler(con_obj.phone_number, con_obj.otp)
         return redirect('consultation:otp', uid=consult_obj.uid)
 
     else:
@@ -62,7 +61,8 @@ def resend_otp(request, uid):
     user = Consultation.objects.get(uid=uid)
     user.otp = random.randint(1000, 9999)
     user.save()
-    # message_handler = MessageHandler(user.phone_number, user.otp)
+    message_handler = MessageHandler(user.phone_number, user.otp)
+    message_handler.send_otp_on_mobile()
     # print(user.phone_number, user.otp, user.name, user.email)
     context = {'object': user, 'resend': True}
     return render(request, 'otp.html', context)
@@ -144,7 +144,7 @@ def handlerequest(request):
                     con_obj.is_paid = True
                     con_obj.save()
                     pay_status = True
-                    print(params_dict)
+                    # print(params_dict)
                 except Exception as e: 
                     print(e)
                     pay_db.Payment_status = 2
