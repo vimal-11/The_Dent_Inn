@@ -65,6 +65,11 @@
                                         <p class="card-text">Appointment mode: In Person</p>    
                                     {% endif %}
                                 </div>
+                            </div><br>
+                            <div class="float-right">
+                                <p class="mainmessage">
+                                    <a href="{% url 'home:cancel_appointments' id=user.id %}">Cancel Appointment</a>
+                                </p>
                             </div>
                         </div>
                     </div>
@@ -74,6 +79,13 @@
                     <h3>No Bookings or Appoinments made</h3><br>
                     <h4>
                         <a href="{% url 'consultation:consult' %}" class="btn btn-primary py-md-3 px-md-5 me-3 animated slideInLeft">Online Consultaion</a>
+                        <a href="{% url 'home:appointment' %}" class="btn btn-primary py-md-3 px-md-5 me-3 animated slideInLeft">Make Appointment</a>
+                    </h4>
+                {% endif %}
+                {% if appointment_cancel %}
+                    <h3>Your Appointment has been canceled successfully.</h3><br>
+                    <h4>
+                        <p>To make a new appointment visit</p>
                         <a href="{% url 'home:appointment' %}" class="btn btn-primary py-md-3 px-md-5 me-3 animated slideInLeft">Make Appointment</a>
                     </h4>
                 {% endif %}

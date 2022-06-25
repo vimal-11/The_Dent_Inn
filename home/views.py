@@ -135,3 +135,8 @@ def my_appointments(request):
         return render(request, 'my_booking_status.html', context)
     else:
         return render(request, 'my_booking.html', context)
+
+def cancel_appointment(request, id):
+    app_obj = Appointments.objects.get(id=id)
+    app_obj.delete()
+    return render(request, 'my_booking_status.html', {"appointment_cancel": True})
