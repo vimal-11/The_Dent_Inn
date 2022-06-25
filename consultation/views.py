@@ -3,6 +3,7 @@ from django.http import HttpResponse
 from django.shortcuts import redirect, render
 from django.contrib.sites.shortcuts import get_current_site
 from django.views.decorators.csrf import csrf_exempt
+from django.core.mail import send_mail
 
 from consultation.models import Consultation, Payment
 from .mixins import  MessageHandler
@@ -18,8 +19,6 @@ def consult(request):
         ph_no = request.POST['contact-no']
         email = request.POST['patient-email']
         symptoms = request.POST['symptoms']
-
-
         consult_obj, created = Consultation.objects.get_or_create(name = name,
                                                                 phone_number = ph_no,
                                                                 email = email,    
@@ -27,11 +26,23 @@ def consult(request):
         consult_obj.symptoms = symptoms
         consult_obj.otp = random.randint(1000, 9999)
         consult_obj.save()
-        message_handler = MessageHandler(consult_obj.phone_number, consult_obj.otp)
-        message_handler.send_otp_on_mobile()
+
+        # email OTP
+        msg_sub = 'OTP for Online Consultation'
+        message = f'Your OTP for The Dent Inn online consultaion is {consult_obj.otp}'
+        send_mail(
+            msg_sub,
+            message,
+            settings.EMAIL_HOST_USER,
+            [consult_obj.email],
+        )
+
+        # SMS OTP
+        # message_handler = MessageHandler(consult_obj.phone_number, consult_obj.otp)
+        # message_handler.send_otp_on_mobile()
+
         print(consult_obj.phone_number, consult_obj.otp, consult_obj.name, consult_obj.email)
         return redirect('consultation:otp', uid=consult_obj.uid)
-
     else:
         return render(request, 'consult.html')
 
@@ -61,11 +72,25 @@ def resend_otp(request, uid):
     user = Consultation.objects.get(uid=uid)
     user.otp = random.randint(1000, 9999)
     user.save()
-    message_handler = MessageHandler(user.phone_number, user.otp)
-    message_handler.send_otp_on_mobile()
+
+    # email OTP
+    msg_sub = 'OTP for Online Consultation'
+    message = f'Your OTP for The Dent Inn online consultaion is {user.otp}'
+    send_mail(
+        msg_sub,
+        message,
+        settings.EMAIL_HOST_USER,
+        [user.email],
+    )
+
+    # SMS OTP
+    # message_handler = MessageHandler(user.phone_number, user.otp)
+    # message_handler.send_otp_on_mobile()
+
     # print(user.phone_number, user.otp, user.name, user.email)
     context = {'object': user, 'resend': True}
     return render(request, 'otp.html', context)
+
 
 # razorpay client
 

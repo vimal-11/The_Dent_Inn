@@ -6,7 +6,7 @@
     <div class="d-flex justify-content-center align-items-center container">
         <div class="card py-5 px-3">
             <h3 class="m-1">OTP Verification</h3>
-            <span class="mobile-text">Enter the code we just sent to your mobile phone <b class="text-danger">{{object.phone_number}}</b></span>
+            <span class="mobile-text">Enter the code we just sent to your mobile phone <b class="text-danger">{{object.email}}</b></span>
             <form action="{% url 'consultation:otp' uid=object.uid %}" method="post">
                 {% csrf_token %}
                 <div class="d-flex flex-row mt-3">
@@ -23,7 +23,7 @@
                     </div>
                 </form>
                     <div class="text-center mt-4">
-                        <span class="d-block mobile-text">New Code sent to {{object.phone_number}}, still Don't receive the code?</span><span class="font-weight-bold text-danger cursor"><a href="{% url 'consultation:resendotp' uid=object.uid %}">Resend</a></span>
+                        <span class="d-block mobile-text">New Code sent to {{object.email}}, still Don't receive the code?</span><span class="font-weight-bold text-danger cursor"><a href="{% url 'consultation:resendotp' uid=object.uid %}">Resend</a></span>
                     </div>
                 {% else %}
                     <div class="col-7 m-auto mt-4">
@@ -45,7 +45,7 @@
                         </div>
                     </form>
                         <div class="text-center mt-4">
-                            <span class="d-block mobile-text">New Code sent to {{object.phone_number}}, still Don't receive the code?</span><span class="font-weight-bold text-danger cursor"><a href="{% url 'consultation:resendotp' uid=object.uid %}">Resend</a></span>
+                            <span class="d-block mobile-text">New Code sent to {{object.email}}, still Don't receive the code?</span><span class="font-weight-bold text-danger cursor"><a href="{% url 'consultation:resendotp' uid=object.uid %}">Resend</a></span>
                         </div>
                     {% endif %}
             {% endif %}

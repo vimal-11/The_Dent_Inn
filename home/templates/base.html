@@ -102,7 +102,7 @@
                 <a href="{% url 'home:testimonial' %}" class="nav-item nav-link">Testimonial</a>
                 <a href="{% url 'home:appointment' %}" class="nav-item nav-link">Appointment</a>
             </div>
-            <button type="button" class="btn text-dark" data-bs-toggle="modal" data-bs-target="#searchModal"><i class="fa fa-search"></i></button>
+            <!-- <button type="button" class="btn text-dark" data-bs-toggle="modal" data-bs-target="#searchModal"><i class="fa fa-search"></i></button> -->
             <!--<a href="{% url 'home:appointment' %}" class="btn btn-primary py-2 px-4 ms-3">Appointment</a>-->
             <a href="{% url 'consultation:consult' %}" class="btn btn-primary py-2 px-4 ms-3">Online Consultation</a>
         </div>
@@ -110,7 +110,7 @@
     <!-- Navbar End -->
 
     <!-- Full Screen Search Start -->
-    <div class="modal fade" id="searchModal" tabindex="-1">
+    <!-- <div class="modal fade" id="searchModal" tabindex="-1">
         <div class="modal-dialog modal-fullscreen">
             <div class="modal-content" style="background: rgba(9, 30, 62, .7);">
                 <div class="modal-header border-0">
@@ -124,7 +124,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
     <!-- Full Screen Search End -->
 
     {% block content %}
@@ -139,7 +139,7 @@
                     {% csrf_token %}
                     <div class="input-group">
                         <input type="text" name="email" class="form-control border-white p-3" placeholder="Your Email" required>
-                        <button class="btn btn-dark px-4" type="submit">Give Testimonial</button>
+                        <button class="btn btn-primary btn-dark col-xs-3" type="submit">Give Testimonial</button>
                     </div>
                 </form>
             </div>
@@ -200,8 +200,7 @@
                         <a class="btn btn-primary btn-square rounded me-2" href="https://www.linkedin.com/in/vimal11/"><i class="fab fa-linkedin-in fw-normal"></i></a>
                         <a class="btn btn-primary btn-square rounded" href="https://www.instagram.com/_vimal_30/"><i class="fab fa-instagram fw-normal"></i></a>
                     </div>
-                </div>
-                
+                </div>   
             </div>
         </div>
     </div>

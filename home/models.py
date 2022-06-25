@@ -9,7 +9,7 @@ from phonenumber_field.modelfields import PhoneNumberField
 class Appointments(models.Model):
     patient_name = models.CharField(max_length=100)
     email = models.EmailField(verbose_name="email", max_length=60)
-    contact_no = PhoneNumberField(null=False, blank=False, unique=True)
+    contact_no = PhoneNumberField(null=False, blank=False)
     treatment = models.CharField(max_length=100) #must be changes to options
     date = models.DateField(null=True)
     time_slot = models.TimeField(null=True)
@@ -24,7 +24,7 @@ class Appointments(models.Model):
 class Testimonial(models.Model):
     name = models.CharField(max_length=100)
     email = models.EmailField(verbose_name="email", max_length=60)
-    contact_no = PhoneNumberField(null=False, blank=False, unique=True)
+    contact_no = PhoneNumberField(null=False, blank=False)
     message = models.TextField()
     is_valid = models.BooleanField(default=True)
 

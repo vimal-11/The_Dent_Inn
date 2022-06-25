@@ -9,7 +9,7 @@ import razorpay
 
 class Consultation(models.Model):
     name                = models.CharField(max_length=50)
-    phone_number        = PhoneNumberField(null=False, blank=False, unique=True)
+    phone_number        = PhoneNumberField(null=False, blank=False)
     email               = models.EmailField(verbose_name="email", max_length=60)
     symptoms            = models.CharField(max_length=700, null=True)
     otp                 = models.CharField(max_length=100, null=True, blank=True)
