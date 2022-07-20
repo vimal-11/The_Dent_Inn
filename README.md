@@ -14,4 +14,4 @@ A Neighbourhood Dental Clinic Website
 - Appointment Bookings
 - Online Consultation System
 - Online Payment System (RazorPay Gateway API)
-- OTP Authorization
+- OTP Authorization (Both Email and SMS)
