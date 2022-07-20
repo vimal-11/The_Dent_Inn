@@ -1,2 +1,17 @@
 # The_Dent_Inn
-A Dental Clinic Website
+A Neighbourhood Dental Clinic Website
+
+## Tech Stack
+
+- Python
+- Django
+- PostgreSQL
+- Html/Css
+- Heroku
+
+## Features
+
+- Appointment Bookings
+- Online Consultation System
+- Online Payment System (RazorPay Gateway API)
+- OTP Authorization
