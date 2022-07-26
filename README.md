@@ -27,6 +27,10 @@ A Neighbourhood Dental Clinic Website
 </p>
 
 <br>
+<p align="center">
+  <img src="https://github.com/vimal-11/The_Dent_Inn/blob/master/Screenshot/otp.jpg" alt="accessibility text" width="600" height="300">
+</p>
+<br>
 
 ## Website
 
